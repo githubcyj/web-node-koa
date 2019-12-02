@@ -52,9 +52,31 @@ const listServer = async(ctx) => {
     }
 }
 
+const list_Category = async(ctx) => {
+    const category_list = await CategoryModel.find({parentId})
+    if(category_list){
+        return {status: 0, data: category_list}
+    }else{
+        console.error('获取分类列表异常', error)
+        return {status: 1, msg: '获取分类列表异常, 请重新尝试'}
+    }
+}
+
+const add_Category = async(ctx) => {
+    const category = await CategoryModel.create({name: categoryName, parentId: parentId || '0'})
+    if(category){
+        return {status: 0, data: category}
+    }else{
+        console.error('添加分类异常', error)
+        return {status: 1, msg: '添加分类异常, 请重新尝试'}
+    }
+}
+
 module.exports = {
     addServer : addServer,
     updateServer : updateServer,
     deleteServer : deleteServer,
-    listServer : listServer
+    listServer : listServer,
+    list_Category : list_Category,
+    add_Category : add_Category
 }

@@ -9,5 +9,7 @@ router.post('/user/add', ManagerController.addUser)
       .post('/user/update', ManagerController.updateUser)
       .post('/user/delete', ManagerController.deleteUser)
       .get('/user/list', ManagerController.userList)
+      .get('/category/list', ManagerController.listCategory)
+      .post('/category/add', ManagerController.addCategory)
 
 module.exports = router.routes()
