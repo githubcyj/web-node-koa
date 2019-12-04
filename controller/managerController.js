@@ -36,11 +36,20 @@ const addCategory = async(ctx) => {
     console.log(add_category)
     ctx.body = add_category
 }
+
+const updateCategory = async(ctx) => {
+    const { categoryId, categoryName } = ctx.request.body
+    let update_Category = await ManagerService.update_Category(categoryId, categoryName)
+    console.log(update_Category)
+    ctx.body = update_Category
+}
+
 module.exports = {
     addUser : addUser,
     updateUser : updateUser,
     deleteUser : deleteUser,
     userList : userList,
     listCategory : listCategory,
-    addCategory : addCategory
+    addCategory : addCategory,
+    updateCategory: updateCategory
 }

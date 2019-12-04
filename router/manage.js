@@ -11,5 +11,6 @@ router.post('/user/add', ManagerController.addUser)
       .get('/user/list', ManagerController.userList)
       .get('/category/list', ManagerController.listCategory)
       .post('/category/add', ManagerController.addCategory)
+      .post('/category/update', ManagerController.updateCategory)
 
 module.exports = router.routes()

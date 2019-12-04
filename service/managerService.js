@@ -1,5 +1,6 @@
 const UserModel = require('../modules/UserModule')
 const md5 = require('blueimp-md5')
+const CategoryModel = require('../modules/CategoryModule')
 
 const addServer = async(username, password) => {
 
@@ -52,8 +53,8 @@ const listServer = async(ctx) => {
     }
 }
 
-const list_Category = async(ctx) => {
-    const category_list = await CategoryModel.find({parentId})
+const list_Category = async(parentId) => {
+    const category_list = await CategoryModel.find({parentId: parentId || '0'})
     if(category_list){
         return {status: 0, data: category_list}
     }else{
@@ -62,7 +63,7 @@ const list_Category = async(ctx) => {
     }
 }
 
-const add_Category = async(ctx) => {
+const add_Category = async(parentId, categoryName) => {
     const category = await CategoryModel.create({name: categoryName, parentId: parentId || '0'})
     if(category){
         return {status: 0, data: category}
@@ -72,11 +73,22 @@ const add_Category = async(ctx) => {
     }
 }
 
+const update_Category = async(categoryId, categoryName) => {
+    const oldCategory = await CategoryModel.findAndModify({_id: categoryId}, {name: categoryName})
+    if(oldCategory){
+        return {status: 0, data: oldCategory}
+    }else{
+        console.error('更新分类名称异常', error)
+        return {status: 1, msg: '更新分类名称异常, 请重新尝试'}
+    }
+}
+
 module.exports = {
     addServer : addServer,
     updateServer : updateServer,
     deleteServer : deleteServer,
     listServer : listServer,
     list_Category : list_Category,
-    add_Category : add_Category
+    add_Category : add_Category,
+    update_Category : update_Category
 }
